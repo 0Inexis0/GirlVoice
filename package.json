@@ -1,0 +1,59 @@
+{
+  "name": "girlvoice",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Live voice studio for Windows and Linux",
+  "author": "GirlVoice",
+  "license": "UNLICENSED",
+  "type": "module",
+  "main": "electron/main.js",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "start": "npm run build && electron .",
+    "build": "vite build",
+    "test": "node --test tests/*.test.js",
+    "test:desktop": "node scripts/desktop-smoke.js",
+    "pack:win": "npm run build && electron-builder --win portable --x64 --config.electronDist=node_modules/electron/dist",
+    "pack:linux": "npm run build && electron-builder --linux AppImage tar.gz --x64"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "lucide-react": "^0.468.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "electron": "^41.0.0",
+    "electron-builder": "^26.15.3",
+    "playwright": "^1.58.0",
+    "vite": "^6.4.0"
+  },
+  "overrides": { "global-agent": "^4.1.3" },
+  "build": {
+    "appId": "app.girlvoice.desktop",
+    "productName": "GirlVoice",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": "portable",
+      "artifactName": "GirlVoice-${version}-Windows.${ext}",
+      "signAndEditExecutable": false
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "tar.gz"
+      ],
+      "category": "AudioVideo",
+      "artifactName": "GirlVoice-${version}-Linux-${arch}.${ext}",
+      "extraFiles": [{ "from": "start.sh", "to": "start.sh" }, { "from": "README.md", "to": "README.md" }]
+    }
+  }
+}

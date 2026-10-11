@@ -1,0 +1,11 @@
+node_modules/
+dist/
+release/
+.env*
+*.log
+.DS_Store
+credential.bin
+settings.json
+.npmrc
+*.pem
+*.key
