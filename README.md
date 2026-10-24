@@ -1,104 +1,104 @@
-![GirlVoice: Deine Stimme. Ein neuer Klang.](.github/repo-header.svg)
+![GirlVoice: Your voice. A new sound.](.github/repo-header-en.svg)
 
 # GirlVoice
 
-Verwandle deine Mikrofonaufnahme mit ElevenLabs und leite die Ausgabe an Kopfhörer oder ein virtuelles Mikrofon weiter. Für Windows und Linux.
+Transform your microphone audio with ElevenLabs and send the result to headphones or a virtual microphone. Built for Windows and Linux.
 
-[Einrichtung](#einrichtung-und-referenz) · [Quellcode](src/) · [Build-Workflow](.github/workflows/)
+[Setup](#setup-and-reference) · [Source](src/) · [Build workflow](.github/workflows/)
 
-## Auf einen Blick
+## At a glance
 
-- **Direkte Sprachumwandlung.** Mikrofon → ElevenLabs Voice Changer → ausgewähltes Audiogerät.
-- **Hören und steuern.** Stimmwahl, getrenntes Monitoring, sofortiger Ausgabestopp und lokale Verbrauchslimits.
-- **Virtuelles Mikrofon.** Windows mit VB-CABLE; Linux mit PulseAudio oder PipeWire und `pactl`.
+- **Direct voice conversion.** Microphone → ElevenLabs Voice Changer → your selected audio device.
+- **Listen and control.** Voice selection, separate headphone monitoring, instant output stop and local usage limits.
+- **Virtual microphone.** VB-CABLE on Windows; PulseAudio or PipeWire with `pactl` on Linux.
 
-## Loslegen
+## Get started
 
-Node.js 22 oder neuer. Aus dem Quellcode starten:
+Use Node.js 22 or newer. To run from source:
 
 ```sh
 npm ci
 npm start
 ```
 
-Alternativ **start.bat** unter Windows oder **sh start.sh** unter Linux. Diese Startskripte bevorzugen ein vorhandenes Paket. In der App den eigenen ElevenLabs-Key hinterlegen, Mikrofon und Stimme wählen und zuerst mit Kopfhörern testen.
+Alternatively, run **start.bat** on Windows or **sh start.sh** on Linux. These scripts prefer an existing packaged build. Add your own ElevenLabs key in the app, select a microphone and voice, then test with headphones first.
 
-> **Gut zu wissen:** Sprache wird abschnittsweise an ElevenLabs übertragen. Netzwerk- und Modellverzögerung sind hörbar; API-Nutzung verbraucht Anbieter-Kontingent. Live-Audio und Linux müssen auf dem Zielsystem geprüft werden.
+> **Good to know:** Speech is sent to ElevenLabs in chunks. Network and model latency are audible, and API requests consume provider allowance. Live audio and Linux behavior need verification on the target system.
 
 **Stack:** Electron · React · Vite · ElevenLabs
 
-## Einrichtung und Referenz
+## Setup and reference
 
 <details>
-<summary>Vollständige Anleitung: Audio-Routing, Datenschutz, Kosten und Builds</summary>
+<summary>Full guide: audio routing, privacy, costs and builds</summary>
 
-Eine Desktop-App für Windows und Linux mit direkter Sprachumwandlung: Mikrofon → ElevenLabs Voice Changer → ausgewähltes Audiogerät. Alternativ ist der bisherige Textmodus mit Scribe Realtime und Flash v2.5 verfügbar. Monitoring, Stimmwahl, sofortiger Ausgabestopp, lokale Verbrauchslimits und verschlüsselte Key-Speicherung.
+## Launching
 
-## Start
+GirlVoice offers direct speech conversion: microphone → ElevenLabs Voice Changer → selected audio device. The alternative text mode uses Scribe Realtime and Flash v2.5. Features include monitoring, voice selection, immediate output stop, local usage limits and encrypted key storage.
 
-Windows: **start.bat** doppelklicken. Linux: **sh start.sh** ausführen (oder einmal `chmod +x start.sh`, dann `./start.sh`). Die Skripte starten bevorzugt ein vorhandenes Paket aus `release`; ohne Paket installieren sie bei Bedarf die Projektabhängigkeiten und starten aus dem Quellcode. Zum Entwickeln neuer Änderungen ausdrücklich `npm start` verwenden, damit kein älteres Paket geöffnet wird.
+On Windows, double-click **start.bat**. On Linux, run **sh start.sh**, or run `chmod +x start.sh` once and then `./start.sh`. These scripts prefer an existing package in `release`; without one, they install dependencies if needed and run from source. To develop changes, explicitly use `npm start` so an older package is not launched.
 
-Voraussetzung zur Entwicklung: Node.js 22 oder neuer.
+Development requires Node.js 22 or newer:
 
 ```sh
 npm ci
 npm start
 ```
 
-Die fertige Windows-App liegt nach `npm run pack:win` im Ordner `release`. Auf Linux erzeugt `npm run pack:linux` ein AppImage und ein tar.gz. Für die fertigen Apps ist Node.js nicht erforderlich. Linux-Pakete auf Linux bauen, Windows-Pakete auf Windows. Ein GitHub-Actions-Workflow baut beide Plattformen.
+`npm run pack:win` creates the Windows application in `release`. On Linux, `npm run pack:linux` produces an AppImage and tar.gz archive. Packaged applications do not require Node.js. Build Linux packages on Linux and Windows packages on Windows. A GitHub Actions workflow builds both platforms.
 
-Das Linux-Archiv entpacken und im enthaltenen Ordner `sh start.sh` ausführen. Das beigefügte Skript setzt bei Bedarf die Ausführungsrechte. Ein auf Windows gepacktes Linux-Archiv ist ohne Laufzeittest unter Linux als Testversion zu betrachten.
+Extract the Linux archive and run `sh start.sh` inside it. The included script sets executable permissions when needed. A Linux archive packaged on Windows should be treated as a test build until it has run on Linux.
 
-## Einrichtung
+## Configuration
 
-1. Unter Einstellungen den eigenen ElevenLabs API-Key hinterlegen. Benötigte Rechte: Stimmen lesen und Voice Changer / Speech to Speech. Der optionale Textmodus braucht Text to Speech und Speech to Text. Zum Anzeigen des Kontingents zusätzlich Benutzerinformationen lesen. Eingeschränkte Leserechte für das Kontingent blockieren die Sprachfunktionen nicht.
-2. Mit dem Aktualisieren-Knopf neben „Dein Setup“ den Mikrofonzugriff erlauben und Geräte laden. Der kurze Zugriff zur Geräteerkennung wird sofort beendet und nicht hochgeladen.
-3. Eingabemikrofon, Ausgabe und Stimme wählen. Weiblich markierte Stimmen erscheinen zuerst. Die Liste des Kontos garantiert nicht, dass jede Stimme im Free-Tarif über die API nutzbar ist.
-4. Zuerst Kopfhörer als Ausgabe wählen. Im Modus „Direkter Voice Changer“ auf „5 Sekunden aufnehmen & testen“ drücken und nach dem Aufnahmehinweis einen Satz sprechen. Danach wird das Mikrofon geschlossen und die Aufnahme umgewandelt. Der Test verbraucht Kontingent. „Ausgabe stoppen“ bricht Aufnahme und Wiedergabe ab. Bei Kopfhörern als Hauptausgabe Monitoring ausgeschaltet lassen.
-5. Danach das virtuelle Ausgabegerät wählen, dieses in Discord oder im Spiel als Eingang einstellen und „Mikrofon starten“ drücken.
+1. Add your own ElevenLabs API key in Settings. Required permissions: reading voices and Voice Changer / Speech to Speech. Optional text mode also needs Text to Speech and Speech to Text. Reading user information is required for the allowance display. Restricted allowance-read permissions do not block voice features.
+2. Use the refresh button beside your setup to allow microphone access and load devices. This brief discovery access stops immediately and is not uploaded.
+3. Select an input microphone, output device and voice. Voices marked as female appear first. Appearing in the account list does not guarantee API availability on a free plan.
+4. Select headphones as output first. In direct Voice Changer mode, record a five-second test and speak after the prompt. The microphone then closes and the recording is converted. Tests consume allowance. Stopping output cancels recording and playback. Keep monitoring disabled when headphones are the main output.
+5. Select the virtual output device, choose it as the input in Discord or your game, and start the microphone.
 
 ### Monitoring
 
-Unter „Monitoring“ deine Kopfhörer wählen und „Mithören“ einschalten. Die erzeugte Stimme läuft gleichzeitig ins virtuelle Mikrofon und auf deine Kopfhörer. Der Lautstärkeregler verändert nur das Mithören, nicht die Discord-Ausgabe. Monitoring lässt sich auch während der Sitzung ein- und ausschalten. Es nutzt dieselbe erzeugte Audiospur und löst keine zusätzlichen ElevenLabs-Anfragen aus. Die Originalstimme wird nicht durchgereicht. Einstellungen werden gespeichert. Für getrennte Ausgaben zwei unterschiedliche Geräte auswählen; bei abgezogenen Kopfhörern wird nur Monitoring abgeschaltet.
+Choose headphones under Monitoring and enable listening. The generated voice plays through the virtual microphone and headphones simultaneously. The volume control changes monitoring only, not Discord output. Monitoring can be toggled during a session and uses the same generated audio without extra ElevenLabs requests. Your original voice is not passed through. Preferences are saved. Choose two different devices for separate outputs; disconnecting headphones only disables monitoring.
 
-### Direkter Voice Changer
+### Direct Voice Changer
 
-Der direkte Modus ist vorausgewählt, auch beim ersten Start mit alten Einstellungen ohne Modus. Er nutzt `eleven_multilingual_sts_v2` mit PCM-Eingabe (16 kHz, mono, 16 Bit) und gestreamter PCM-Ausgabe (24 kHz). Deine Sprechweise dient als Vorlage; es gibt kein Transkript und keine parallelen Scribe- oder TTS-Anfragen.
+Direct mode is selected by default, including when older settings have no saved mode. It uses `eleven_multilingual_sts_v2` with PCM input at 16 kHz, mono, 16-bit and streamed PCM output at 24 kHz. Your delivery provides the reference; there is no transcript or parallel Scribe/TTS request.
 
-Eine lokale Pegelerkennung sammelt Sprache in Abschnitten. Nach der gewählten Sprechpause oder spätestens nach 4 Sekunden wird der Abschnitt gesendet. Das ist abschnittsweise Umwandlung mit zusätzlicher Netzwerk- und Modellverzögerung, keine verzögerungsfreie Live-Verbindung. Durchgehende Sätze können an der Abschnittsgrenze hörbar unterbrochen werden. In ruhiger Umgebung und mit Kopfhörern sprechen; sehr leises Flüstern kann von der Pegelerkennung übergangen werden. Ein kurzer Vorlauf schützt Wortanfänge. Bei überfüllter Warteschlange stoppt die Sitzung sichtbar.
+Local level detection collects speech in chunks. A chunk is sent after the selected pause or after four seconds at the latest. Conversion adds network and model latency; it is not a zero-latency live connection. Continuous sentences can be audibly interrupted at chunk boundaries. Use headphones in a quiet environment; very quiet whispers may be missed. A short pre-roll protects word beginnings. A full queue visibly stops the session.
 
-Unter Einstellungen begrenzt „Maximale Audiosekunden“ die eingereichten Aufnahmen pro direkter Sitzung (Standard: 180 Sekunden). Enthaltene Pausen und bereits abgeschickte, abgebrochene Anfragen zählen mit. Jeder Mikrofonstart und Aufnahmetest setzt diesen lokalen Zähler zurück. Er zeigt keine verbindlichen Provider-Credits oder Kosten. Für den bisherigen Weg im Setup „Sprache → Text → Stimme“ auswählen.
+The maximum-audio-seconds setting limits submitted recordings per direct session, defaulting to 180 seconds. Included pauses and requests already submitted before cancellation count. Starting the microphone or a recording test resets this local counter. It is not a definitive provider-credit or cost meter. Select speech → text → voice in the setup to use the previous pipeline.
 
 ### Windows
 
-[VB-CABLE](https://vb-audio.com/Cable/) installieren, gegebenenfalls neu starten. GirlVoice-Ausgabe: **CABLE Input**. Discord-Mikrofon: **CABLE Output**. Discord-Lautsprecher bleiben die normalen Kopfhörer. Das physische Mikrofon wird nicht in das Kabel durchgeschleift.
+Install [VB-CABLE](https://vb-audio.com/Cable/) and restart if needed. Set GirlVoice output to **CABLE Input** and the Discord microphone to **CABLE Output**. Keep normal headphones as Discord speakers. The physical microphone is not passed directly into the cable.
 
 ### Linux
 
-Voraussetzung: PulseAudio oder PipeWire mit `pipewire-pulse`, sowie `pactl` (oft im Paket `pulseaudio-utils`). In Einstellungen auf **Virtuelles Mikrofon einrichten** klicken. Keine Root-Rechte nötig. GirlVoice-Ausgabe: **GirlVoice_Output**. Discord-Mikrofon: **GirlVoice_Microphone**. Falls die neuen Geräte nicht erscheinen, Geräte aktualisieren bzw. Discord neu öffnen.
+Requirements: PulseAudio or PipeWire with `pipewire-pulse`, plus `pactl`, often provided by `pulseaudio-utils`. Use the virtual-microphone setup control in Settings. No root access is required. Select **GirlVoice_Output** as output and **GirlVoice_Microphone** in Discord. Refresh devices or reopen Discord if they do not appear.
 
-Die App erzeugt einen Null-Sink und eine vom Monitor abgeleitete Mikrofonquelle. Sie entfernt beim normalen Beenden nur die Module, die sie selbst angelegt hat, und verändert keine Standardgeräte. Nach einem Absturz vorhandene Geräte werden wiederverwendet. Ein Audio-Server-Neustart entfernt temporäre Geräte; dann erneut einrichten. Nicht als Eingang das virtuelle Mikrofon wählen.
+The app creates a null sink and a microphone source derived from its monitor. On normal exit, it removes only modules it created and does not change default devices. Devices left after a crash are reused. Restarting the audio server removes temporary devices; set them up again afterwards. Do not select the virtual microphone as the app's input.
 
-Für persistente Key-Speicherung wird ein sicherer System-Schlüsselbund benötigt, etwa GNOME Keyring oder KWallet. Ohne Schlüsselbund verweigert GirlVoice eine unverschlüsselte Speicherung und bietet nur Sitzungsspeicherung an. Bei AppImage-Problemen mit FUSE das tar.gz verwenden. Chromium-Sandbox nicht abschalten.
+Persistent key storage requires a secure system keyring such as GNOME Keyring or KWallet. Without one, GirlVoice refuses unencrypted storage and offers session-only storage. Use the tar.gz archive if AppImage has FUSE problems. Do not disable Chromium's sandbox.
 
-## Kosten und Grenzen
+## Costs and limitations
 
-ElevenLabs bietet Free-Kontingente, aber API-Zugang, erlaubte Stimmen und Kontingente können vom Konto abhängen. Verbindlich ist das [eigene Dashboard](https://elevenlabs.io/app/settings/subscription), nicht die Zeichenanzeige dieser App. Keine automatische Buchung von Abos oder Guthaben. Bereits konfigurierte nutzungsabhängige Abrechnung beim Anbieter gilt auch für diese App.
+ElevenLabs offers free allowances, but API access, voices and allowances depend on the account. The [provider dashboard](https://elevenlabs.io/app/settings/subscription) is authoritative, not this app's character display. The app does not automatically purchase subscriptions or credits. Usage-based billing already configured with the provider also applies to this app.
 
-- Nur im Textmodus überträgt Scribe während einer aktiven Sitzung auch Sprechpausen. Mikrofon stoppen beendet die Cloud-Verbindung. Im direkten Modus werden lokal erkannte Audioabschnitte übertragen.
-- Das TTS-Zeichenlimit zählt angeforderte Zeichen, auch wenn eine Antwort abgebrochen wird. Es begrenzt nicht die Kosten der Spracherkennung. Ein neuer Mikrofonstart setzt den Sitzungszähler zurück. Stimmtests zählen mit.
-- Die Kontingentanzeige zeigt Anbieterwerte zum Zeitpunkt der letzten Verbindungsaktualisierung. Diese können Credits oder Zeichen-Kontingente darstellen und sind kein Geldbetrag.
-- Ausgabestopp verwirft wartende und laufende TTS-Ausgabe. Bereits übertragene Audiodaten in Discord lassen sich nicht zurückholen. Weitere bestätigte Sprachabschnitte werden wieder gesprochen. Mikrofon stoppen beendet alles.
-- Im Textmodus werden erst bestätigte Transkripte gesprochen. Kurze Sprechpausen verbessern die Reaktionszeit. Tonfall, Lachen, Flüstern und Sarkasmus gehen beim Text-Zwischenschritt teilweise verloren. Der direkte Modus nutzt die Aufnahme als Vorlage, die tatsächliche Qualität hängt dennoch von Aufnahme und Zielstimme ab.
-- Die Latenzanzeige schätzt Sprechbeginn bis lokal geplanter Audioausgabe. Sie enthält keine nachgelagerte Verzögerung durch den virtuellen Treiber oder Discord und ist keine garantierte End-to-End-Messung.
-- Bei Netzwerkfehlern, Quotenfehlern und überfüllter Warteschlange stoppt die Sitzung, statt automatisch kostenpflichtige Anfragen zu wiederholen. Kein automatischer Wechsel auf die Originalstimme.
-- Globales Push-to-Talk ist nicht enthalten.
+- In text mode, Scribe transmits pauses during an active session too. Stopping the microphone closes the cloud connection. Direct mode sends locally detected audio chunks.
+- The TTS character limit counts requested characters even if a response is cancelled. It does not limit transcription costs. Starting the microphone resets the session counter. Voice tests count too.
+- The allowance display shows provider values from the last connection refresh. These may represent credits or character allowances, not money.
+- Stopping output discards queued and active TTS output. Audio already transmitted into Discord cannot be recalled. Subsequent confirmed speech segments are spoken again. Stopping the microphone stops everything.
+- Text mode only speaks confirmed transcripts. Short pauses improve response time. Tone, laughter, whispers and sarcasm can be lost in the text step. Direct mode uses the recording as reference, but quality still depends on the recording and target voice.
+- The latency display estimates time from speech onset to locally scheduled output. It excludes downstream virtual-driver and Discord delays and is not a guaranteed end-to-end measurement.
+- Network errors, quota errors and full queues stop the session instead of automatically repeating paid requests. There is no automatic fallback to your original voice.
+- Global push-to-talk is not included.
 
-## Datenschutz
+## Privacy
 
-API-Key im Electron-Hauptprozess, UI mit Context Isolation und Sandbox. Windows verwendet DPAPI über Electron safeStorage; Linux den verfügbaren Schlüsselbund. Keine Keys in Repository oder Browser-Storage. Einstellungen liegen im Benutzer-Datenverzeichnis von GirlVoice. Sprache wird direkt an ElevenLabs gesendet. Die App speichert keine Audio- oder Transkriptdateien; die Aufbewahrung durch ElevenLabs richtet sich nach dem Konto und den Anbieterbedingungen.
+The API key stays in the Electron main process. The UI uses Context Isolation and sandboxing. Windows uses DPAPI through Electron safeStorage; Linux uses the available keyring. Keys are not stored in the repository or browser storage. Preferences live in GirlVoice's user-data directory. Speech is sent directly to ElevenLabs. The app does not save audio or transcript files; ElevenLabs retention depends on the account and provider terms.
 
-## Prüfen und bauen
+## Checks and builds
 
 ```sh
 npm test
@@ -107,8 +107,9 @@ npm run test:desktop
 npm run pack:win
 ```
 
-`test:desktop` startet die echte App mit einem temporären Benutzerprofil, prüft UI, Einstellungen und AudioWorklet mit einem lokal erzeugten Testsignal. Er nutzt weder Mikrofon noch API-Key. Screenshots liegen außerhalb des Projekts im temporären Verzeichnis. `npm run dev` ist nur eine Browservorschau und bietet keinen Zugriff auf Desktop- oder Cloud-Funktionen.
+`test:desktop` launches the actual app with a temporary user profile and checks the UI, preferences and AudioWorklet using a locally generated test signal. It uses neither a microphone nor an API key. Screenshots are saved outside the project in a temporary directory. `npm run dev` is only a browser preview and cannot access desktop or cloud features.
 
-API-Referenzen: [Voice Changer Streaming](https://elevenlabs.io/docs/api-reference/speech-to-speech/stream), [Scribe Realtime](https://elevenlabs.io/docs/api-reference/speech-to-text/v-1-speech-to-text-realtime), [TTS Streaming](https://elevenlabs.io/docs/api-reference/text-to-speech/stream), [Preise](https://elevenlabs.io/pricing/api).
+API references: [Voice Changer Streaming](https://elevenlabs.io/docs/api-reference/speech-to-speech/stream), [Scribe Realtime](https://elevenlabs.io/docs/api-reference/speech-to-text/v-1-speech-to-text-realtime), [TTS Streaming](https://elevenlabs.io/docs/api-reference/text-to-speech/stream), [Pricing](https://elevenlabs.io/pricing/api).
+
 
 </details>
