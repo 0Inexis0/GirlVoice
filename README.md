@@ -1,4 +1,36 @@
+![GirlVoice: Deine Stimme. Ein neuer Klang.](.github/repo-banner.svg)
+
 # GirlVoice
+
+Verwandle deine Mikrofonaufnahme mit ElevenLabs und leite die Ausgabe an Kopfhörer oder ein virtuelles Mikrofon weiter. Für Windows und Linux.
+
+[Einrichtung](#einrichtung-und-referenz) · [Quellcode](src/) · [Build-Workflow](.github/workflows/)
+
+## Auf einen Blick
+
+- **Direkte Sprachumwandlung.** Mikrofon → ElevenLabs Voice Changer → ausgewähltes Audiogerät.
+- **Hören und steuern.** Stimmwahl, getrenntes Monitoring, sofortiger Ausgabestopp und lokale Verbrauchslimits.
+- **Virtuelles Mikrofon.** Windows mit VB-CABLE; Linux mit PulseAudio oder PipeWire und `pactl`.
+
+## Loslegen
+
+Node.js 22 oder neuer. Aus dem Quellcode starten:
+
+```sh
+npm ci
+npm start
+```
+
+Alternativ **start.bat** unter Windows oder **sh start.sh** unter Linux. Diese Startskripte bevorzugen ein vorhandenes Paket. In der App den eigenen ElevenLabs-Key hinterlegen, Mikrofon und Stimme wählen und zuerst mit Kopfhörern testen.
+
+> **Gut zu wissen:** Sprache wird abschnittsweise an ElevenLabs übertragen. Netzwerk- und Modellverzögerung sind hörbar; API-Nutzung verbraucht Anbieter-Kontingent. Live-Audio und Linux müssen auf dem Zielsystem geprüft werden.
+
+**Stack:** Electron · React · Vite · ElevenLabs
+
+## Einrichtung und Referenz
+
+<details>
+<summary>Vollständige Anleitung: Audio-Routing, Datenschutz, Kosten und Builds</summary>
 
 Eine Desktop-App für Windows und Linux mit direkter Sprachumwandlung: Mikrofon → ElevenLabs Voice Changer → ausgewähltes Audiogerät. Alternativ ist der bisherige Textmodus mit Scribe Realtime und Flash v2.5 verfügbar. Monitoring, Stimmwahl, sofortiger Ausgabestopp, lokale Verbrauchslimits und verschlüsselte Key-Speicherung.
 
@@ -78,3 +110,5 @@ npm run pack:win
 `test:desktop` startet die echte App mit einem temporären Benutzerprofil, prüft UI, Einstellungen und AudioWorklet mit einem lokal erzeugten Testsignal. Er nutzt weder Mikrofon noch API-Key. Screenshots liegen außerhalb des Projekts im temporären Verzeichnis. `npm run dev` ist nur eine Browservorschau und bietet keinen Zugriff auf Desktop- oder Cloud-Funktionen.
 
 API-Referenzen: [Voice Changer Streaming](https://elevenlabs.io/docs/api-reference/speech-to-speech/stream), [Scribe Realtime](https://elevenlabs.io/docs/api-reference/speech-to-text/v-1-speech-to-text-realtime), [TTS Streaming](https://elevenlabs.io/docs/api-reference/text-to-speech/stream), [Preise](https://elevenlabs.io/pricing/api).
+
+</details>
