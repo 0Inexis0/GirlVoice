@@ -1,4 +1,4 @@
-![GirlVoice: Deine Stimme. Ein neuer Klang.](.github/repo-banner.svg)
+![GirlVoice: Deine Stimme. Ein neuer Klang.](.github/repo-header.svg)
 
 # GirlVoice
 
